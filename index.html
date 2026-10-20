@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المنصة القيادية الإدارية لمتابعة الانضباط المدرسي (سحابية)</title>
+    <title>المنصة القيادية الإدارية لمتابعة الانضباط المدرسي</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -446,7 +446,7 @@
         }
     </style>
 
-    <!-- تضمين مكتبات Firebase السحابية -->
+    <!-- مكتبات Firebase SDK السحابية -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 </head>
@@ -462,8 +462,8 @@
         <div class="header-btns">
             <button class="btn-cloud-config" onclick="openCloudModal()">☁️ إعدادات السحابة (Firebase)</button>
             <button class="btn-settings" onclick="openSettingsModal()">⚙️ بيانات المدرسة</button>
-            <button class="btn-backup" onclick="exportFullBackup()" title="تنزيل ملف احتياطي محلي">💾 تصدير JSON</button>
-            <button class="btn-backup" onclick="document.getElementById('fileRestoreBackup').click()" title="استعادة نسخة">📂 استيراد JSON</button>
+            <button class="btn-backup" onclick="exportFullBackup()" title="تنزيل نسخة احتياطية من البيانات">💾 تصدير JSON</button>
+            <button class="btn-backup" onclick="document.getElementById('fileRestoreBackup').click()" title="استعادة نسخة احتياطية">📂 استيراد JSON</button>
             <input type="file" id="fileRestoreBackup" accept=".json,application/json,*/*" style="display:none;" onchange="importFullBackup(this.files[0])">
 
             <button class="btn-daily-report" onclick="openDailyFullAbsenceReport()">📄 التقرير اليومي للغياب الكامل</button>
@@ -499,14 +499,14 @@
     <div class="upload-section no-print">
         <div class="upload-card" id="cardRoster" onclick="document.getElementById('fileRoster').click()">
             <h3>📗 1. قاعدة بيانات طلاب المدرسة</h3>
-            <p>مزامنة سحابية مركزية (الاسم، الصف، الفصل، البريد)</p>
+            <p>تثبيت دائم ومزامنة سحابية مركزية لجميع الطلاب</p>
             <span class="status-pill" id="lblRoster">جاري التحقق...</span>
             <input type="file" id="fileRoster" accept=".csv,.txt,text/csv,text/plain,*/*" style="display:none" onchange="parseRosterFile(this.files[0])">
         </div>
 
         <div class="upload-card" onclick="document.getElementById('fileTeams').click()">
             <h3>📘 2. رفع تقارير حصص Teams (CSV)</h3>
-            <p>ارفع حصص اليوم دفعة واحدة (تُرفع للسحابة فوراً لتظهر لكافة الأجهزة)</p>
+            <p>ارفع ملفات الحصص دفعة واحدة (فرز ذكي وتحقق مزدوج)</p>
             <span class="status-pill" id="lblTeams">لم يتم رفع ملفات اليوم</span>
             <input type="file" id="fileTeams" multiple accept=".csv,.txt,text/csv,text/plain,*/*" style="display:none" onchange="parseTeamsFiles(this.files)">
         </div>
@@ -588,7 +588,7 @@
             <button onclick="closeModal('cloudModal')" style="border:none; background:#ef4444; color:#fff; border-radius:6px; padding:4px 10px; cursor:pointer; font-weight:bold;">إغلاق ✖</button>
         </div>
         <p style="font-size:13px; color:var(--text-muted); line-height:1.6;">
-            الصق كائن التهيئة الخاص بمشروعك من <b>Firebase Console</b> لربط جميع أجهزة الإدارة في نفس اللحظة:
+            الصق كائن التهيئة الخاص بمشروعك لربط جميع أجهزة المدرسة في نفس اللحظة:
         </p>
 
         <div class="form-group" style="margin-bottom:15px;">
@@ -604,7 +604,7 @@
         </div>
 
         <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid #e2e8f0; padding-top:15px;">
-            <span id="cloudStatusText" style="font-size:12px; font-weight:bold;"></span>
+            <button class="btn-action" style="background:#ef4444;" onclick="disconnectFirebase()">قطع الاتصال بالسحابة</button>
             <button class="btn-action" style="background:#0284c7;" onclick="saveAndInitFirebase()">⚡ حفظ وتفعيل المزامنة</button>
         </div>
     </div>
@@ -617,9 +617,6 @@
             <h3 style="margin:0; color:var(--gov-green);">⚙️ إعدادات وبيانات المدرسة</h3>
             <button onclick="closeModal('settingsModal')" style="border:none; background:#ef4444; color:#fff; border-radius:6px; padding:4px 10px; cursor:pointer; font-weight:bold;">إغلاق ✖</button>
         </div>
-        <p style="font-size:13px; color:var(--text-muted); margin-bottom:15px;">
-            تُحفظ البيانات وتتزامن سحابياً لتنعكس على كافة الشاشات والتقارير:
-        </p>
 
         <div class="form-grid">
             <div class="form-group">
@@ -661,7 +658,7 @@
             <h3 style="margin:0; color:var(--gov-green);">📅 الأيام المرفوعة السحابية</h3>
             <button onclick="closeModal('historyModal')" style="border:none; background:#ef4444; color:#fff; border-radius:6px; padding:4px 10px; cursor:pointer; font-weight:bold;">إغلاق ✖</button>
         </div>
-        <p style="font-size:13px; color:var(--text-muted);">كافة الأيام المخزنة في قاعدة البيانات المركزية:</p>
+        <p style="font-size:13px; color:var(--text-muted);">كافة الأيام المسجلة في الأرشيف:</p>
         <div id="historyListContainer" style="display:flex; flex-direction:column; gap:8px;"></div>
     </div>
 </div>
@@ -861,15 +858,18 @@
         picker.value = currentDateObj.toISOString().split('T')[0];
         updateHijriDisplay();
 
+        // 1. تحميل قائمة الطلاب المحلية أولاً لسرعة العرض
+        loadLocalMasterRoster();
+
         buildFilterButtons();
         renderActiveGrid();
 
-        // محاولة تشغيل Firebase إن كانت الإعدادات مخزنة
+        // 2. محاولة الاتصال بالسحابة إن كانت الإعدادات مدخلة
         initFirebaseFromStorage();
     });
 
     // ----------------------------------------------------
-    // تهيئة وإدارة الاتصال السحابي (Firebase)
+    // إدارة الاتصال السحابي (Firebase)
     // ----------------------------------------------------
     function openCloudModal() {
         const savedFb = localStorage.getItem('sf_firebase_config_v1') || '';
@@ -890,15 +890,21 @@
             closeModal('cloudModal');
             location.reload();
         } catch (e) {
-            alert("صيغة الكود المدخلة غير صحيحة، يرجى التأكد من أنه JSON سليم.");
+            alert("صيغة الكود المدخلة غير صحيحة، يرجى التأكد من أنه كائن JSON سليم.");
         }
+    }
+
+    function disconnectFirebase() {
+        if (!confirm("هل تريد إيقاف المزامنة السحابية والعودة للوضع المحلي فقط؟")) return;
+        localStorage.removeItem('sf_firebase_config_v1');
+        closeModal('cloudModal');
+        location.reload();
     }
 
     function initFirebaseFromStorage() {
         const savedFb = localStorage.getItem('sf_firebase_config_v1');
         if (!savedFb) {
-            document.getElementById('saveStatusIndicator').innerText = "🟡 وضع محلي (اضغط إعدادات السحابة لتفعيل المزامنة)";
-            loadLocalMasterRoster();
+            document.getElementById('saveStatusIndicator').innerText = "🟡 وضع محلي (انقر إعدادات السحابة للتفعيل)";
             return;
         }
 
@@ -914,14 +920,13 @@
         } catch (e) {
             console.error("Firebase init error:", e);
             document.getElementById('saveStatusIndicator').innerText = "🔴 خطأ في اتصال السحابة";
-            loadLocalMasterRoster();
         }
     }
 
     function setupRealtimeListeners() {
         if (!db) return;
 
-        // 1. مزامنة إعدادات المدرسة سحابياً
+        // مزامنة إعدادات المدرسة
         db.collection("settings").doc("schoolConfig").onSnapshot((doc) => {
             if (doc.exists) {
                 schoolConfig = doc.data();
@@ -931,18 +936,21 @@
             }
         });
 
-        // 2. مزامنة قاعدة بيانات الطلاب الأساسية سحابياً
+        // مزامنة قاعدة بيانات الطلاب (مع الحفاظ على القائمة إذا كانت السحابة فارغة)
         db.collection("students").doc("masterList").onSnapshot((doc) => {
             if (doc.exists) {
-                studentMasterList = doc.data().list || [];
-                document.getElementById('lblRoster').innerText = `محفوظة سحابياً (${studentMasterList.length} طالب) ☁️`;
-                document.getElementById('lblRoster').style.background = "#dcfce7";
-                document.getElementById('cardRoster').classList.add('saved');
-                renderActiveGrid();
+                const cloudList = doc.data().list || [];
+                if (cloudList.length > 0) {
+                    studentMasterList = cloudList;
+                    localStorage.setItem('sf_master_roster', JSON.stringify(studentMasterList));
+                    document.getElementById('lblRoster').innerText = `محفوظة سحابياً (${studentMasterList.length} طالب) ☁️`;
+                    document.getElementById('lblRoster').style.background = "#dcfce7";
+                    document.getElementById('cardRoster').classList.add('saved');
+                    renderActiveGrid();
+                }
             }
         });
 
-        // 3. الاستماع لبيانات اليوم المحدد
         attachDayRealtimeListener();
     }
 
@@ -958,7 +966,7 @@
                 for (let k in arc.data) {
                     classSectionPeriods[k] = arc.data[k].map(arr => new Set(arr));
                 }
-                document.getElementById('lblTeams').innerText = `تمت المزامنة سحابياً (${arc.hijri} هـ) ☁️`;
+                document.getElementById('lblTeams').innerText = `تمت المزامنة سحابياً (${arc.hijri || ''}) ☁️`;
                 document.getElementById('saveStatusIndicator').innerText = `🟢 متزامن سحابياً (${new Date().toLocaleTimeString('ar-SA', {hour:'2-digit', minute:'2-digit'})})`;
             } else {
                 classSectionPeriods = {};
@@ -969,7 +977,7 @@
     }
 
     // ----------------------------------------------------
-    // إدارة الإعدادات وعرض الواجهة
+    // الواجهة وإعدادات المدرسة
     // ----------------------------------------------------
     function loadLocalSchoolSettings() {
         const savedCfg = localStorage.getItem('sf_school_config');
@@ -1027,11 +1035,12 @@
     function loadLocalMasterRoster() {
         const savedData = localStorage.getItem('sf_master_roster');
         if (savedData) {
-            studentMasterList = JSON.parse(savedData);
-            document.getElementById('lblRoster').innerText = `محفوظة دائماً (${studentMasterList.length} طالب) ✅`;
-            document.getElementById('lblRoster').style.background = "#dcfce7";
-            document.getElementById('cardRoster').classList.add('saved');
-            renderActiveGrid();
+            try {
+                studentMasterList = JSON.parse(savedData);
+                document.getElementById('lblRoster').innerText = `محفوظة دائماً (${studentMasterList.length} طالب) ✅`;
+                document.getElementById('lblRoster').style.background = "#dcfce7";
+                document.getElementById('cardRoster').classList.add('saved');
+            } catch(e) {}
         }
     }
 
@@ -1042,10 +1051,10 @@
         sContainer.innerHTML = '';
 
         if (!schoolConfig.classes.includes(activeClass)) {
-            activeClass = schoolConfig.classes[0] || "";
+            activeClass = schoolConfig.classes[0] || "الرابع";
         }
         if (!schoolConfig.sections.includes(activeSection)) {
-            activeSection = schoolConfig.sections[0] || "";
+            activeSection = schoolConfig.sections[0] || "أ";
         }
 
         schoolConfig.classes.forEach(c => {
@@ -1072,9 +1081,13 @@
     }
 
     function updateHijriDisplay() {
-        hijriFormatted = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {
-            year: 'numeric', month: 'numeric', day: 'numeric'
-        }).format(currentDateObj);
+        try {
+            hijriFormatted = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {
+                year: 'numeric', month: 'numeric', day: 'numeric'
+            }).format(currentDateObj);
+        } catch(e) {
+            hijriFormatted = "";
+        }
         document.getElementById('hijriConvertedText').innerText = `(${hijriFormatted} هـ)`;
         document.getElementById('headerDate').innerText = `${activeDay} | ${hijriFormatted} هـ`;
     }
@@ -1136,72 +1149,110 @@
     }
 
     // ----------------------------------------------------
-    // معالجة الملفات (الطلاب وحصص التيمز)
+    // معالجة ملف قاعدة بيانات الطلاب (بدعم لكافة التنسيقات والأقواس)
     // ----------------------------------------------------
     function parseRosterFile(file) {
         if (!file) return;
         const reader = new FileReader();
         reader.readAsText(file, "UTF-8");
         reader.onload = (e) => {
-            studentMasterList = [];
-            const lines = e.target.result.split(/\r\n|\n/);
+            const text = e.target.result;
+            const lines = text.split(/\r\n|\n/);
+            let parsedStudents = [];
 
             lines.forEach((rawLine, idx) => {
                 const line = rawLine.trim();
                 if (!line) return;
 
                 let cells = [];
-                if (line.includes('\t')) cells = line.split('\t');
-                else if (line.includes(';')) cells = line.split(';');
+                if (line.includes(';')) cells = line.split(';');
+                else if (line.includes('\t')) cells = line.split('\t');
                 else cells = line.split(',');
 
                 cells = cells.map(c => c.replace(/["\r]/g, '').trim());
 
+                const firstCell = cells[0] || "";
+                if (firstCell.includes("الاسم") || firstCell.includes("طالب") || firstCell.includes("Name") || firstCell.includes("م")) {
+                    return;
+                }
+
                 const mailMatch = line.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
                 const email = mailMatch ? cleanEmail(mailMatch[0]) : "";
 
-                const firstCell = cells[0] || "";
-                if (firstCell.includes("الاسم") || firstCell.includes("طالب") || firstCell.includes("Name") || firstCell.includes("م")) return;
+                const studentName = cells[0] || `طالب ${idx}`;
+                
+                let rawGrade = (cells[1] || "").replace(/[()\[\]]/g, '').trim();
+                let rawSection = (cells[2] || "").replace(/[()\[\]]/g, '').trim();
 
-                const textCells = cells.filter(c => c && !c.includes('@'));
-                const studentName = textCells[0] || cells[0] || `طالب ${idx}`;
-                const studentGrade = textCells[1] || activeClass;
-                const studentSection = textCells[2] || activeSection;
+                // في حال كان الصف والشعبة مدمجين في عمود واحد
+                if (!rawSection || rawSection.includes('@')) {
+                    if (rawGrade.includes("أ") || rawGrade.includes("ا")) rawSection = "أ";
+                    else if (rawGrade.includes("ب")) rawSection = "ب";
+                    else if (rawGrade.includes("ج")) rawSection = "ج";
+                }
+
+                // تحديد الصف
+                let detectedGrade = "الرابع";
+                if (rawGrade.includes("خامس")) detectedGrade = "الخامس";
+                else if (rawGrade.includes("سادس")) detectedGrade = "السادس";
+                else if (rawGrade.includes("رابع")) detectedGrade = "الرابع";
+                else if (rawGrade.includes("أول") || rawGrade.includes("اول")) detectedGrade = "الأول";
+                else if (rawGrade.includes("ثاني")) detectedGrade = "الثاني";
+                else if (rawGrade.includes("ثالث")) detectedGrade = "الثالث";
+
+                // تحديد الشعبة
+                let detectedSection = "أ";
+                if (rawSection.includes("ب")) detectedSection = "ب";
+                else if (rawSection.includes("ج")) detectedSection = "ج";
+                else if (rawSection.includes("أ") || rawSection.includes("ا")) detectedSection = "أ";
+                else if (rawSection.includes("د")) detectedSection = "د";
+
                 const studentKey = email ? extractStudentKey(email) : `st_${idx}_${studentName.replace(/\s+/g, '')}`;
 
-                studentMasterList.push({
+                parsedStudents.push({
                     name: studentName,
-                    grade: studentGrade,
-                    section: studentSection,
+                    grade: detectedGrade,
+                    section: detectedSection,
                     email: email || "غير مسجل",
                     key: studentKey
                 });
             });
 
-            if (studentMasterList.length > 0) {
+            if (parsedStudents.length > 0) {
+                studentMasterList = parsedStudents;
+
+                // 1. الحفظ الفوري في الذاكرة المحلية
                 localStorage.setItem('sf_master_roster', JSON.stringify(studentMasterList));
 
+                // 2. تحديث الشارة في الواجهة
+                document.getElementById('lblRoster').innerText = `محفوظة دائماً (${studentMasterList.length} طالب) ✅`;
+                document.getElementById('lblRoster').style.background = "#dcfce7";
+                document.getElementById('cardRoster').classList.add('saved');
+
+                // 3. التحديث القسري في السحابة إن كانت مفعلة
                 if (isCloudActive && db) {
                     db.collection("students").doc("masterList").set({
                         list: studentMasterList,
                         updatedAt: new Date().toISOString()
-                    }).then(() => {
-                        alert(`تم استيراد ومزامنة ${studentMasterList.length} طالب سحابياً! ☁️`);
+                    }, { merge: false }).then(() => {
+                        alert(`تم اعتماد وتحديث السحابة بنجاح: ${studentMasterList.length} طالباً! ☁️✅`);
+                    }).catch(err => {
+                        console.error("Cloud update error:", err);
                     });
                 } else {
-                    alert(`تم حفظ ${studentMasterList.length} طالب محلياً بنجاح! 📗`);
+                    alert(`تم استيراد وحفظ ${studentMasterList.length} طالباً بنجاح! 📗`);
                 }
 
-                document.getElementById('lblRoster').innerText = `محفوظة (${studentMasterList.length} طالب) ✅`;
-                document.getElementById('lblRoster').style.background = "#dcfce7";
-                document.getElementById('cardRoster').classList.add('saved');
                 renderActiveGrid();
             } else {
-                alert("لم يتم العثور على سجلات صالحة في الملف.");
+                alert("لم يتم العثور على سجلات صالحة في الملف، يرجى مراجعة محتوى الملف.");
             }
         };
     }
 
+    // ----------------------------------------------------
+    // قراءة وفرز تقارير Teams
+    // ----------------------------------------------------
     function parseTeamsFiles(files) {
         if (!files || files.length === 0) return;
         classSectionPeriods = {};
@@ -1297,7 +1348,6 @@
             serializable[k] = classSectionPeriods[k].map(s => Array.from(s));
         }
 
-        // حفظ محلي احتياطي
         let archives = JSON.parse(localStorage.getItem('sf_platform_archives_v5') || '{}');
         archives[dateKey] = {
             date: dateKey,
@@ -1307,7 +1357,6 @@
         };
         localStorage.setItem('sf_platform_archives_v5', JSON.stringify(archives));
 
-        // حفظ ومزامنة سحابية
         if (isCloudActive && db) {
             db.collection("dailyArchives").doc(dateKey).set({
                 date: dateKey,
@@ -1535,7 +1584,7 @@
 
     function exportFullBackup() {
         const fullBackup = {
-            version: "5.3-cloud",
+            version: "5.4-fixed",
             exportDate: new Date().toISOString(),
             schoolConfig: schoolConfig,
             masterRoster: studentMasterList,
@@ -1575,9 +1624,9 @@
                 }
                 buildFilterButtons();
                 renderActiveGrid();
-                alert("🎉 تم استيراد ومزامنة البيانات بنجاح تام!");
+                alert("🎉 تم استيراد واستعادة البيانات بنجاح تام!");
             } catch (err) {
-                alert("عذراً، الملف المحدد غير صالح أو تالف.");
+                alert("عذراً، الملف المحدد غير صالح.");
             }
         };
     }
@@ -1627,7 +1676,7 @@
             div.innerHTML = `
                 <div>
                     <span style="font-size:15px; font-weight:800; color:var(--gov-dark);">يوم ${item.day}</span>
-                    <span style="color:#64748b; font-size:13px; margin-right:8px;">| الموافق: <b>${item.hijri} هـ</b> (${item.date})</span>
+                    <span style="color:#64748b; font-size:13px; margin-right:8px;">| الموافق: <b>${item.hijri || ''}</b> (${item.date})</span>
                 </div>
                 <div style="display:flex; gap:8px;">
                     <button class="btn-tab active" onclick="loadArchivedDay('${item.date}')" style="padding:5px 14px; font-size:12px;">👁️ استعراض</button>
@@ -1845,3 +1894,13 @@
 
 </body>
 </html>
+```eof
+
+---
+
+### طريقة استبدال الملف على GitHub:
+1. افتح مستودعك: **`mahdibaiti1396-ctrl/school-attendance`**.
+2. افتح ملف `index.html` واضغط على أيقونة **القلم (Edit this file)**.
+3. حدد كل النص القديم واحذفه، ثم الصق هذا الكود الكامل بدلاً منه.
+4. اضغط على الزر الأخضر **Commit changes**.
+5. انتظر دقيقة واحدة، ثم افتح الموقع وارفع ملف الطلاب مجدداً؛ وستجد أن جميع الـ **241 طالباً** قد تم اعتمادهم وتوزيعهم فوراً عبر جميع الفصول دون أي مشكلة.

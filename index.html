@@ -1,0 +1,1847 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المنصة القيادية الإدارية لمتابعة الانضباط المدرسي (سحابية)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gov-green: #146356;
+            --gov-dark: #0a3327;
+            --gov-gold: #c5a059;
+            --surface: #ffffff;
+            --bg: #f3f6f8;
+            --border: #dcdfe4;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --present: #166534;
+            --present-bg: #dcfce7;
+            --absent: #991b1b;
+            --absent-bg: #fee2e2;
+            --whatsapp: #25d366;
+            --info: #0284c7;
+        }
+
+        * { box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
+        body { background: var(--bg); margin: 0; padding: 20px; color: var(--text-main); }
+        .wrapper { max-width: 1300px; margin: 0 auto; }
+
+        .official-header {
+            background: linear-gradient(135deg, var(--gov-dark), var(--gov-green));
+            color: #fff;
+            padding: 20px 30px;
+            border-radius: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid var(--gov-gold);
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        .school-meta h1 { margin: 0 0 4px 0; font-size: 24px; font-weight: 800; }
+        .school-meta p { margin: 0; font-size: 14px; opacity: 0.9; }
+
+        .header-btns { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+        
+        .btn-settings {
+            background: #ffffff;
+            color: var(--gov-dark);
+            padding: 8px 14px;
+            border-radius: 8px;
+            border: 2px solid var(--gov-gold);
+            font-weight: 800;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-settings:hover { background: #fdf8ed; transform: translateY(-2px); }
+
+        .btn-cloud-config {
+            background: #0284c7;
+            color: #fff;
+            padding: 8px 14px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 800;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-cloud-config:hover { background: #0369a1; transform: translateY(-2px); }
+
+        .btn-backup {
+            background: rgba(255,255,255,0.2);
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.4);
+            font-weight: 700;
+            font-size: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-backup:hover { background: rgba(255,255,255,0.35); }
+
+        .btn-vip {
+            background: linear-gradient(135deg, var(--gov-gold), #dfb86c);
+            color: #000;
+            padding: 9px 14px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 800;
+            font-size: 13px;
+            cursor: pointer;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+            transition: 0.2s;
+        }
+        .btn-vip:hover { transform: translateY(-2px); }
+
+        .btn-daily-report {
+            background: #fff;
+            color: var(--gov-dark);
+            padding: 9px 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.4);
+            font-weight: 800;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-daily-report:hover { background: #f8fafc; transform: translateY(-2px); }
+
+        .platform-bar {
+            background: var(--surface);
+            padding: 16px 22px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .days-group { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+        .day-btn {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            background: #f8fafc;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .day-btn.active {
+            background: var(--gov-green);
+            color: white;
+            border-color: var(--gov-green);
+        }
+        .date-picker-box {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #f1f5f9;
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+        }
+        .date-picker-box input {
+            border: none;
+            background: transparent;
+            font-family: inherit;
+            font-weight: bold;
+            color: var(--gov-dark);
+            outline: none;
+        }
+
+        .btn-history {
+            background: var(--info);
+            color: #fff;
+            padding: 8px 14px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .upload-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .upload-card {
+            background: var(--surface);
+            border: 2px dashed var(--border);
+            padding: 18px;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .upload-card:hover { border-color: var(--gov-green); background: #f0fdf4; }
+        .upload-card.saved { border: 2px solid #10b981; background: #f0fdf4; }
+        .upload-card h3 { margin: 0 0 4px 0; color: var(--gov-green); font-size: 15px; }
+        .upload-card p { margin: 0; font-size: 12px; color: var(--text-muted); }
+        .status-pill {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 3px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            background: #e2e8f0;
+        }
+
+        .nav-panel {
+            background: var(--surface);
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+        }
+        .panel-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+        .panel-row:last-child { margin-bottom: 0; }
+        .panel-label { font-weight: 700; width: 110px; color: var(--gov-dark); font-size: 14px; }
+        .btn-tab-group { display: flex; gap: 8px; flex-wrap: wrap; }
+        .btn-tab {
+            padding: 6px 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: #f8fafc;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 13px;
+        }
+        .btn-tab.active { background: var(--gov-green); color: white; border-color: var(--gov-green); }
+
+        .stats-summary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .summary-card {
+            background: var(--surface);
+            padding: 14px 18px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            border-right: 4px solid var(--gov-green);
+        }
+        .summary-card.danger { border-right-color: var(--absent); }
+        .summary-card h4 { margin: 0 0 4px 0; font-size: 13px; color: var(--text-muted); }
+        .summary-card div { font-size: 22px; font-weight: 800; }
+
+        .action-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--surface);
+            padding: 12px 20px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .btn-action {
+            padding: 9px 16px;
+            border-radius: 8px;
+            border: none;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #fff;
+        }
+        .btn-wa { background: var(--whatsapp); }
+        .btn-print { background: #1e40af; }
+
+        .table-wrap {
+            background: var(--surface);
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+        table { width: 100%; border-collapse: collapse; text-align: center; }
+        th {
+            background: #f8fafc;
+            color: var(--gov-dark);
+            font-size: 13px;
+            font-weight: 800;
+            padding: 12px 14px;
+            border-bottom: 2px solid var(--border);
+        }
+        td { padding: 12px 14px; font-size: 13px; border-bottom: 1px solid #f1f5f9; }
+        tr:hover td { background-color: #fafafa; }
+        .badge { padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 700; display: inline-block; }
+        .badge-present { background: var(--present-bg); color: var(--present); }
+        .badge-absent { background: var(--absent-bg); color: var(--absent); }
+        .badge-partial { background: #fef3c7; color: #92400e; }
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.65);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 1000;
+        }
+        .modal.active-modal { display: flex !important; }
+        .modal-body {
+            background: #fff;
+            width: 100%;
+            max-width: 900px;
+            border-radius: 12px;
+            padding: 20px;
+            max-height: 92vh;
+            overflow-y: auto;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .form-group { display: flex; flex-direction: column; gap: 6px; text-align: right; }
+        .form-group label { font-size: 13px; font-weight: 800; color: var(--gov-dark); }
+        .form-group input, .form-group textarea {
+            padding: 9px 12px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+            font-size: 13px;
+            outline: none;
+        }
+        .form-group input:focus, .form-group textarea:focus { border-color: var(--gov-green); }
+
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            padding: 10px 14px;
+            border-radius: 8px;
+            gap: 10px;
+        }
+        .btn-delete-day {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .btn-delete-day:hover { background: #ef4444; color: #fff; }
+
+        .portrait-a4-page {
+            width: 100%;
+            max-width: 790px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px 24px;
+            box-sizing: border-box;
+            border: 2px solid #146356;
+            border-radius: 12px;
+        }
+        .doc-header-table {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #146356;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+        .doc-header-right { font-size: 12px; font-weight: bold; color: var(--gov-green); line-height: 1.5; text-align: right; }
+        .doc-header-center { text-align: center; }
+        .moe-logo-custom { width: 125px; height: auto; }
+        .doc-header-left { font-size: 12px; font-weight: bold; text-align: left; line-height: 1.5; }
+
+        .report-title-strip {
+            background: linear-gradient(135deg, var(--gov-green), #1b8170);
+            color: #fff;
+            text-align: center;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .report-grid-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11.5px;
+            margin-bottom: 15px;
+        }
+        .report-grid-table th, .report-grid-table td {
+            border: 1px solid #94a3b8;
+            padding: 5px 6px;
+            text-align: center;
+        }
+        .report-grid-table th { background: #e2e8f0; color: var(--gov-dark); font-weight: 800; }
+
+        .signatures-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: 25px;
+            padding: 0 45px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        @page { size: A4 portrait; margin: 8mm 6mm; }
+
+        @media print {
+            body { background: #fff !important; margin: 0 !important; padding: 0 !important; }
+            .no-print, .wrapper, .modal-header-actions { display: none !important; }
+
+            body.print-mode-daily .modal:not(#dailyReportModal) { display: none !important; }
+            body.print-mode-daily #dailyReportModal {
+                position: static !important;
+                display: block !important;
+                background: none !important;
+                padding: 0 !important;
+            }
+            body.print-mode-daily #dailyReportModal .modal-body {
+                max-width: 100% !important;
+                padding: 0 !important;
+                border: none !important;
+            }
+
+            body.print-mode-sup .modal:not(#supervisionModal) { display: none !important; }
+            body.print-mode-sup #supervisionModal {
+                position: static !important;
+                display: block !important;
+                background: none !important;
+                padding: 0 !important;
+            }
+            body.print-mode-sup #supervisionModal .modal-body {
+                max-width: 100% !important;
+                padding: 0 !important;
+                border: none !important;
+            }
+
+            .portrait-a4-page {
+                width: 100% !important;
+                max-width: 100% !important;
+                border: 2px solid #146356 !important;
+                padding: 10mm !important;
+                box-sizing: border-box !important;
+                page-break-inside: avoid !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+    </style>
+
+    <!-- تضمين مكتبات Firebase السحابية -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+
+<div class="wrapper">
+    <!-- الترويسة الرئيسية -->
+    <div class="official-header">
+        <div class="school-meta">
+            <h1>المملكة العربية السعودية - وزارة التعليم</h1>
+            <p id="topSchoolBanner">الإدارة العامة للتعليم بجازان | ابتدائية سلمان الفارسي</p>
+        </div>
+        <div class="header-btns">
+            <button class="btn-cloud-config" onclick="openCloudModal()">☁️ إعدادات السحابة (Firebase)</button>
+            <button class="btn-settings" onclick="openSettingsModal()">⚙️ بيانات المدرسة</button>
+            <button class="btn-backup" onclick="exportFullBackup()" title="تنزيل ملف احتياطي محلي">💾 تصدير JSON</button>
+            <button class="btn-backup" onclick="document.getElementById('fileRestoreBackup').click()" title="استعادة نسخة">📂 استيراد JSON</button>
+            <input type="file" id="fileRestoreBackup" accept=".json,application/json,*/*" style="display:none;" onchange="importFullBackup(this.files[0])">
+
+            <button class="btn-daily-report" onclick="openDailyFullAbsenceReport()">📄 التقرير اليومي للغياب الكامل</button>
+            <button class="btn-vip" onclick="openSupervisionModal()">👔 تقرير الزيارة الإشرافية</button>
+            <div id="headerDate" style="background: rgba(255,255,255,0.15); padding: 8px 12px; border-radius: 8px; font-weight: bold; font-size: 13px;">جاري التحديث...</div>
+        </div>
+    </div>
+
+    <!-- شريط الأيام والتاريخ -->
+    <div class="platform-bar no-print">
+        <div class="days-group">
+            <b style="color:var(--gov-dark); margin-left:6px;">📅 يوم المنصة:</b>
+            <button class="day-btn active" onclick="setDay('الأحد', this)">الأحد</button>
+            <button class="day-btn" onclick="setDay('الإثنين', this)">الإثنين</button>
+            <button class="day-btn" onclick="setDay('الثلاثاء', this)">الثلاثاء</button>
+            <button class="day-btn" onclick="setDay('الأربعاء', this)">الأربعاء</button>
+            <button class="day-btn" onclick="setDay('الخميس', this)">الخميس</button>
+        </div>
+
+        <div class="date-picker-box">
+            <b>تاريخ اليوم:</b>
+            <input type="date" id="platformDatePicker" onchange="onDateChanged()">
+            <span id="hijriConvertedText" style="color:var(--gov-green); font-size:13px; font-weight:700;"></span>
+        </div>
+
+        <div style="display:flex; align-items:center; gap:10px;">
+            <button class="btn-history" onclick="openHistoryModal()">📂 الأيام المحفوظة</button>
+            <span id="saveStatusIndicator" style="font-size:13px; color:var(--info); font-weight:bold;">⚪ جاري التهيئة...</span>
+        </div>
+    </div>
+
+    <!-- مربعات الرفع -->
+    <div class="upload-section no-print">
+        <div class="upload-card" id="cardRoster" onclick="document.getElementById('fileRoster').click()">
+            <h3>📗 1. قاعدة بيانات طلاب المدرسة</h3>
+            <p>مزامنة سحابية مركزية (الاسم، الصف، الفصل، البريد)</p>
+            <span class="status-pill" id="lblRoster">جاري التحقق...</span>
+            <input type="file" id="fileRoster" accept=".csv,.txt,text/csv,text/plain,*/*" style="display:none" onchange="parseRosterFile(this.files[0])">
+        </div>
+
+        <div class="upload-card" onclick="document.getElementById('fileTeams').click()">
+            <h3>📘 2. رفع تقارير حصص Teams (CSV)</h3>
+            <p>ارفع حصص اليوم دفعة واحدة (تُرفع للسحابة فوراً لتظهر لكافة الأجهزة)</p>
+            <span class="status-pill" id="lblTeams">لم يتم رفع ملفات اليوم</span>
+            <input type="file" id="fileTeams" multiple accept=".csv,.txt,text/csv,text/plain,*/*" style="display:none" onchange="parseTeamsFiles(this.files)">
+        </div>
+    </div>
+
+    <!-- شريط التصفية والفرز -->
+    <div class="nav-panel no-print">
+        <div class="panel-row">
+            <span class="panel-label">🏫 الصف الدراسي:</span>
+            <div class="btn-tab-group" id="classesBtnGroup"></div>
+        </div>
+        <div class="panel-row">
+            <span class="panel-label">🚪 الفصل:</span>
+            <div class="btn-tab-group" id="sectionsBtnGroup"></div>
+        </div>
+    </div>
+
+    <!-- كروت الإحصاء -->
+    <div class="stats-summary no-print">
+        <div class="summary-card">
+            <h4>إجمالي طلاب الفصل</h4>
+            <div id="cntTotal">0</div>
+        </div>
+        <div class="summary-card">
+            <h4>حاضرون كامل اليوم</h4>
+            <div id="cntFullPresent" style="color:var(--present);">0</div>
+        </div>
+        <div class="summary-card danger">
+            <h4>غائبون كامل اليوم</h4>
+            <div id="cntFullAbsent" style="color:var(--absent);">0</div>
+        </div>
+        <div class="summary-card">
+            <h4>غياب جزئي (بالحصص)</h4>
+            <div id="cntPartial" style="color:var(--gov-gold);">0</div>
+        </div>
+    </div>
+
+    <!-- شريط الإجراءات والواتساب -->
+    <div class="action-bar no-print">
+        <div>
+            <b>العرض النشط: </b>
+            <span id="txtCurrentView" style="color:var(--gov-green); font-weight:800;">الأحد | الصف الرابع (أ)</span>
+            <span id="classPeriodsCountLabel" style="font-size:12px; font-weight:bold; color:var(--info); margin-right:8px;">(الحصص المرفوعة: 0)</span>
+        </div>
+        <div style="display:flex; gap:10px;">
+            <button class="btn-action btn-wa" onclick="exportWhatsappFormatted()">📲 نسخ كشف غياب الواتساب</button>
+            <button class="btn-action btn-print" onclick="window.print()">🖨️ طباعة الكشف</button>
+        </div>
+    </div>
+
+    <!-- جدول عرض الطلاب -->
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 40px;">م</th>
+                    <th>اسم الطالب</th>
+                    <th>الصف</th>
+                    <th>الفصل</th>
+                    <th class="email-col">البريد الإلكتروني</th>
+                    <th>حصص الحضور</th>
+                    <th>حصص الغياب</th>
+                    <th>حالة اليوم</th>
+                    <th>مجموع الغياب التراكمي</th>
+                </tr>
+            </thead>
+            <tbody id="tblBody">
+                <tr><td colspan="9" style="padding:24px; color:var(--text-muted);">بانتظار مزامنة السجلات...</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- نافذة إعدادات Firebase السحابية -->
+<div class="modal" id="cloudModal">
+    <div class="modal-body" style="max-width:650px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid var(--info); padding-bottom:10px; margin-bottom:15px;">
+            <h3 style="margin:0; color:var(--info);">☁️ ربط السحابة المركزية (Firebase Config)</h3>
+            <button onclick="closeModal('cloudModal')" style="border:none; background:#ef4444; color:#fff; border-radius:6px; padding:4px 10px; cursor:pointer; font-weight:bold;">إغلاق ✖</button>
+        </div>
+        <p style="font-size:13px; color:var(--text-muted); line-height:1.6;">
+            الصق كائن التهيئة الخاص بمشروعك من <b>Firebase Console</b> لربط جميع أجهزة الإدارة في نفس اللحظة:
+        </p>
+
+        <div class="form-group" style="margin-bottom:15px;">
+            <label>Firebase Config (JSON Object):</label>
+            <textarea id="cfgFirebaseInput" rows="9" style="font-family:monospace; direction:ltr; text-align:left;" placeholder='{
+  "apiKey": "AIzaSy...",
+  "authDomain": "school.firebaseapp.com",
+  "projectId": "school-platform",
+  "storageBucket": "school.appspot.com",
+  "messagingSenderId": "...",
+  "appId": "..."
+}'></textarea>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid #e2e8f0; padding-top:15px;">
+            <span id="cloudStatusText" style="font-size:12px; font-weight:bold;"></span>
+            <button class="btn-action" style="background:#0284c7;" onclick="saveAndInitFirebase()">⚡ حفظ وتفعيل المزامنة</button>
+        </div>
+    </div>
+</div>
+
+<!-- نافذة إعدادات بيانات المدرسة -->
+<div class="modal" id="settingsModal">
+    <div class="modal-body" style="max-width:700px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid var(--gov-green); padding-bottom:10px; margin-bottom:15px;">
+            <h3 style="margin:0; color:var(--gov-green);">⚙️ إعدادات وبيانات المدرسة</h3>
+            <button onclick="closeModal('settingsModal')" style="border:none; background:#ef4444; color:#fff; border-radius:6px; padding:4px 10px; cursor:pointer; font-weight:bold;">إغلاق ✖</button>
+        </div>
+        <p style="font-size:13px; color:var(--text-muted); margin-bottom:15px;">
+            تُحفظ البيانات وتتزامن سحابياً لتنعكس على كافة الشاشات والتقارير:
+        </p>
+
+        <div class="form-grid">
+            <div class="form-group">
+                <label>الإدارة العامة للتعليم:</label>
+                <input type="text" id="cfgEduDirectorate" value="الإدارة العامة للتعليم بجازان">
+            </div>
+            <div class="form-group">
+                <label>اسم المدرسة:</label>
+                <input type="text" id="cfgSchoolName" value="ابتدائية سلمان الفارسي">
+            </div>
+            <div class="form-group">
+                <label>مدير المدرسة:</label>
+                <input type="text" id="cfgPrincipalName" value="مهدي حسن بعيطي">
+            </div>
+            <div class="form-group">
+                <label>وكيل المدرسة للشؤون التعليمية:</label>
+                <input type="text" id="cfgVicePrincipalName" value="وكيل المدرسة">
+            </div>
+            <div class="form-group" style="grid-column: span 2;">
+                <label>الصفوف المتاحة (افصل بينها بفاصلة):</label>
+                <input type="text" id="cfgClassesList" value="الرابع, الخامس, السادس">
+            </div>
+            <div class="form-group" style="grid-column: span 2;">
+                <label>الفصول / الشعب المتاحة (افصل بينها بفاصلة):</label>
+                <input type="text" id="cfgSectionsList" value="أ, ب, ج">
+            </div>
+        </div>
+
+        <div style="display:flex; justify-content:flex-end; gap:10px; border-top:1px solid #e2e8f0; padding-top:15px;">
+            <button class="btn-action" style="background:#10b981;" onclick="saveSchoolSettings()">💾 حفظ ومزامنة البيانات</button>
+        </div>
+    </div>
+</div>
+
+<!-- نافذة استرجاع وحذف الأيام -->
+<div class="modal" id="historyModal">
+    <div class="modal-body" style="max-width:700px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid var(--gov-green); padding-bottom:10px; margin-bottom:15px;">
+            <h3 style="margin:0; color:var(--gov-green);">📅 الأيام المرفوعة السحابية</h3>
+            <button onclick="closeModal('historyModal')" style="border:none; background:#ef4444; color:#fff; border-radius:6px; padding:4px 10px; cursor:pointer; font-weight:bold;">إغلاق ✖</button>
+        </div>
+        <p style="font-size:13px; color:var(--text-muted);">كافة الأيام المخزنة في قاعدة البيانات المركزية:</p>
+        <div id="historyListContainer" style="display:flex; flex-direction:column; gap:8px;"></div>
+    </div>
+</div>
+
+<!-- نافذة التقرير اليومي A4 طولي -->
+<div class="modal" id="dailyReportModal">
+    <div class="modal-body" style="max-width:850px;">
+        <div class="modal-header-actions no-print" style="display:flex; justify-content:space-between; margin-bottom:12px;">
+            <button class="btn-action btn-print" onclick="printDailyReport()">🖨️ حفظ كـ PDF أو طباعة (A4 طولي)</button>
+            <button class="btn-action" style="background:#64748b;" onclick="closeModal('dailyReportModal')">إغلاق ✖</button>
+        </div>
+
+        <div class="portrait-a4-page">
+            <div class="doc-header-table">
+                <div class="doc-header-right">
+                    المملكة العربية السعودية<br>
+                    وزارة التعليم<br>
+                    <span id="repDailyDirectorate">الإدارة العامة للتعليم بجازان</span><br>
+                    <span id="repDailySchoolName">ابتدائية سلمان الفارسي</span>
+                </div>
+                <div class="doc-header-center">
+                    <svg class="moe-logo-custom" viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="moeGradDaily" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#258ecb"/>
+                                <stop offset="50%" stop-color="#1ea896"/>
+                                <stop offset="100%" stop-color="#46a066"/>
+                            </linearGradient>
+                        </defs>
+                        <g fill="url(#moeGradDaily)">
+                            <circle cx="50" cy="45" r="20"/><circle cx="110" cy="45" r="20"/><circle cx="170" cy="65" r="18"/>
+                            <circle cx="50" cy="110" r="20"/><circle cx="110" cy="110" r="20"/><circle cx="170" cy="125" r="18"/>
+                            <circle cx="50" cy="175" r="20"/><circle cx="110" cy="175" r="20"/><circle cx="170" cy="185" r="18"/>
+                            <circle cx="230" cy="120" r="16"/><circle cx="230" cy="175" r="16"/><circle cx="230" cy="230" r="14"/>
+                            <circle cx="450" cy="45" r="20"/><circle cx="390" cy="45" r="20"/><circle cx="330" cy="65" r="18"/>
+                            <circle cx="450" cy="110" r="20"/><circle cx="390" cy="110" r="20"/><circle cx="330" cy="125" r="18"/>
+                            <circle cx="450" cy="175" r="20"/><circle cx="390" cy="175" r="20"/><circle cx="330" cy="185" r="18"/>
+                            <circle cx="270" cy="120" r="16"/><circle cx="270" cy="175" r="16"/><circle cx="250" cy="275" r="12"/>
+                        </g>
+                        <text x="250" y="325" text-anchor="middle" font-family="'Segoe UI', Tahoma" font-size="56" font-weight="bold" fill="url(#moeGradDaily)">وزارة الـتـعـلـيـم</text>
+                        <text x="250" y="375" text-anchor="middle" font-family="'Segoe UI', Tahoma" font-size="28" font-weight="600" fill="url(#moeGradDaily)" letter-spacing="1.5">Ministry of Education</text>
+                    </svg>
+                </div>
+                <div class="doc-header-left">
+                    اليوم: <span id="dailyRepDay">الأحد</span><br>
+                    التاريخ: <span id="dailyRepDate">--</span><br>
+                    النوع: كشف الغياب الكامل
+                </div>
+            </div>
+
+            <div class="report-title-strip">
+                تقرير الغياب الكامل اليومي لجميع الفصول (منصة Teams)
+            </div>
+
+            <table class="report-grid-table">
+                <thead>
+                    <tr>
+                        <th style="width:115px;">الصف والفصل</th>
+                        <th style="width:85px;">إجمالي الطلاب</th>
+                        <th style="width:100px;">الغياب الكامل</th>
+                        <th>أسماء الطلاب الغائبين اليوم كاملاً</th>
+                    </tr>
+                </thead>
+                <tbody id="dailyReportTableBody">
+                    <tr><td colspan="4">جاري تجهيز الكشف...</td></tr>
+                </tbody>
+            </table>
+
+            <div class="signatures-box">
+                <div style="text-align:center;">
+                    <b>وكيل المدرسة</b><br>
+                    <span id="repDailyVicePrincipal" style="font-size:12px; font-weight:bold;">وكيل المدرسة</span><br>
+                    ..........................................
+                </div>
+                <div style="text-align:center;">
+                    <b>مدير المدرسة</b><br>
+                    <span id="repDailyPrincipal" style="color:var(--gov-green); font-size:13px; font-weight:800;">مهدي حسن بعيطي</span><br>
+                    ..........................................
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- نافذة تقرير الزيارة الإشرافية -->
+<div class="modal" id="supervisionModal">
+    <div class="modal-body" style="max-width:850px;">
+        <div class="modal-header-actions no-print" style="display:flex; justify-content:space-between; margin-bottom:12px;">
+            <button class="btn-action btn-print" onclick="printSupervisionReport()">🖨️ حفظ كـ PDF أو طباعة للمشرف الزائر</button>
+            <button class="btn-action" style="background:#64748b;" onclick="closeModal('supervisionModal')">إغلاق ✖</button>
+        </div>
+
+        <div class="portrait-a4-page">
+            <div class="doc-header-table">
+                <div class="doc-header-right">
+                    المملكة العربية السعودية<br>
+                    وزارة التعليم<br>
+                    <span id="repSupDirectorate">الإدارة العامة للتعليم بجازان</span><br>
+                    <span id="repSupSchoolName">ابتدائية سلمان الفارسي</span>
+                </div>
+                <div class="doc-header-center">
+                    <svg class="moe-logo-custom" viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="moeGradSup" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#258ecb"/>
+                                <stop offset="50%" stop-color="#1ea896"/>
+                                <stop offset="100%" stop-color="#46a066"/>
+                            </linearGradient>
+                        </defs>
+                        <g fill="url(#moeGradSup)">
+                            <circle cx="50" cy="45" r="20"/><circle cx="110" cy="45" r="20"/><circle cx="170" cy="65" r="18"/>
+                            <circle cx="50" cy="110" r="20"/><circle cx="110" cy="110" r="20"/><circle cx="170" cy="125" r="18"/>
+                            <circle cx="50" cy="175" r="20"/><circle cx="110" cy="175" r="20"/><circle cx="170" cy="185" r="18"/>
+                            <circle cx="230" cy="120" r="16"/><circle cx="230" cy="175" r="16"/><circle cx="230" cy="230" r="14"/>
+                            <circle cx="450" cy="45" r="20"/><circle cx="390" cy="45" r="20"/><circle cx="330" cy="65" r="18"/>
+                            <circle cx="450" cy="110" r="20"/><circle cx="390" cy="110" r="20"/><circle cx="330" cy="125" r="18"/>
+                            <circle cx="450" cy="175" r="20"/><circle cx="390" cy="175" r="20"/><circle cx="330" cy="185" r="18"/>
+                            <circle cx="270" cy="120" r="16"/><circle cx="270" cy="175" r="16"/><circle cx="250" cy="275" r="12"/>
+                        </g>
+                        <text x="250" y="325" text-anchor="middle" font-family="'Segoe UI', Tahoma" font-size="56" font-weight="bold" fill="url(#moeGradSup)">وزارة الـتـعـلـيـم</text>
+                        <text x="250" y="375" text-anchor="middle" font-family="'Segoe UI', Tahoma" font-size="28" font-weight="600" fill="url(#moeGradSup)" letter-spacing="1.5">Ministry of Education</text>
+                    </svg>
+                </div>
+                <div class="doc-header-left">
+                    اليوم: <span id="supDay">الأحد</span><br>
+                    التاريخ: <span id="supDate">--</span><br>
+                    الصفحة: 1 من 1
+                </div>
+            </div>
+
+            <div class="report-title-strip">
+                تقرير المتابعة اليومي والزيارات الإشرافية لانضباط منصة Teams
+            </div>
+
+            <div style="font-weight:bold; margin-bottom:6px; color:var(--gov-dark); font-size:12px;">
+                📋 بيان بأسماء الطلاب المتغيبين والإجراءات المنفذة حيالهم:
+            </div>
+            
+            <table class="report-grid-table">
+                <thead>
+                    <tr>
+                        <th style="width:30px;">م</th>
+                        <th>اسم الطالب</th>
+                        <th>الصف</th>
+                        <th>الفصل</th>
+                        <th>نوع الغياب المرصود</th>
+                        <th>الحصص المتغيب عنها</th>
+                        <th>الإجراء المتخذ</th>
+                    </tr>
+                </thead>
+                <tbody id="supAbsTableBody">
+                    <tr><td colspan="7">لا توجد حالات غياب مسجلة لهذا اليوم.</td></tr>
+                </tbody>
+            </table>
+
+            <div class="signatures-box">
+                <div style="text-align:center;">
+                    <b>وكيل المدرسة</b><br>
+                    <span id="repSupVicePrincipal" style="font-size:12px; font-weight:bold;">وكيل المدرسة</span><br>
+                    ..........................................
+                </div>
+                <div style="text-align:center;">
+                    <b>مدير المدرسة</b><br>
+                    <span id="repSupPrincipal" style="color:var(--gov-green); font-size:13px; font-weight:800;">مهدي حسن بعيطي</span><br>
+                    ..........................................
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let schoolConfig = {
+        directorate: "الإدارة العامة للتعليم بجازان",
+        schoolName: "ابتدائية سلمان الفارسي",
+        principal: "مهدي حسن بعيطي",
+        vicePrincipal: "وكيل المدرسة",
+        classes: ["الرابع", "الخامس", "السادس"],
+        sections: ["أ", "ب", "ج"]
+    };
+
+    let activeDay = "الأحد";
+    let activeClass = "الرابع";
+    let activeSection = "أ";
+    let studentMasterList = [];
+    let classSectionPeriods = {};
+    let currentDateObj = new Date();
+    let hijriFormatted = "";
+    let db = null;
+    let isCloudActive = false;
+    let dayUnsubscribe = null;
+
+    window.addEventListener("DOMContentLoaded", () => {
+        loadLocalSchoolSettings();
+
+        const picker = document.getElementById('platformDatePicker');
+        picker.value = currentDateObj.toISOString().split('T')[0];
+        updateHijriDisplay();
+
+        buildFilterButtons();
+        renderActiveGrid();
+
+        // محاولة تشغيل Firebase إن كانت الإعدادات مخزنة
+        initFirebaseFromStorage();
+    });
+
+    // ----------------------------------------------------
+    // تهيئة وإدارة الاتصال السحابي (Firebase)
+    // ----------------------------------------------------
+    function openCloudModal() {
+        const savedFb = localStorage.getItem('sf_firebase_config_v1') || '';
+        document.getElementById('cfgFirebaseInput').value = savedFb;
+        document.getElementById('cloudModal').classList.add('active-modal');
+    }
+
+    function saveAndInitFirebase() {
+        const raw = document.getElementById('cfgFirebaseInput').value.trim();
+        if (!raw) {
+            alert("يرجى إدخال كائن Firebase Config أولاً.");
+            return;
+        }
+
+        try {
+            let parsed = JSON.parse(raw);
+            localStorage.setItem('sf_firebase_config_v1', JSON.stringify(parsed, null, 2));
+            closeModal('cloudModal');
+            location.reload();
+        } catch (e) {
+            alert("صيغة الكود المدخلة غير صحيحة، يرجى التأكد من أنه JSON سليم.");
+        }
+    }
+
+    function initFirebaseFromStorage() {
+        const savedFb = localStorage.getItem('sf_firebase_config_v1');
+        if (!savedFb) {
+            document.getElementById('saveStatusIndicator').innerText = "🟡 وضع محلي (اضغط إعدادات السحابة لتفعيل المزامنة)";
+            loadLocalMasterRoster();
+            return;
+        }
+
+        try {
+            const config = JSON.parse(savedFb);
+            if (!firebase.apps.length) {
+                firebase.initializeApp(config);
+            }
+            db = firebase.firestore();
+            isCloudActive = true;
+            document.getElementById('saveStatusIndicator').innerText = "🟢 متصل بالسحابة اللحظية";
+            setupRealtimeListeners();
+        } catch (e) {
+            console.error("Firebase init error:", e);
+            document.getElementById('saveStatusIndicator').innerText = "🔴 خطأ في اتصال السحابة";
+            loadLocalMasterRoster();
+        }
+    }
+
+    function setupRealtimeListeners() {
+        if (!db) return;
+
+        // 1. مزامنة إعدادات المدرسة سحابياً
+        db.collection("settings").doc("schoolConfig").onSnapshot((doc) => {
+            if (doc.exists) {
+                schoolConfig = doc.data();
+                applySchoolSettingsUI();
+                buildFilterButtons();
+                renderActiveGrid();
+            }
+        });
+
+        // 2. مزامنة قاعدة بيانات الطلاب الأساسية سحابياً
+        db.collection("students").doc("masterList").onSnapshot((doc) => {
+            if (doc.exists) {
+                studentMasterList = doc.data().list || [];
+                document.getElementById('lblRoster').innerText = `محفوظة سحابياً (${studentMasterList.length} طالب) ☁️`;
+                document.getElementById('lblRoster').style.background = "#dcfce7";
+                document.getElementById('cardRoster').classList.add('saved');
+                renderActiveGrid();
+            }
+        });
+
+        // 3. الاستماع لبيانات اليوم المحدد
+        attachDayRealtimeListener();
+    }
+
+    function attachDayRealtimeListener() {
+        if (!db) return;
+        if (dayUnsubscribe) dayUnsubscribe();
+
+        const dateKey = currentDateObj.toISOString().split('T')[0];
+        dayUnsubscribe = db.collection("dailyArchives").doc(dateKey).onSnapshot((doc) => {
+            if (doc.exists) {
+                const arc = doc.data();
+                classSectionPeriods = {};
+                for (let k in arc.data) {
+                    classSectionPeriods[k] = arc.data[k].map(arr => new Set(arr));
+                }
+                document.getElementById('lblTeams').innerText = `تمت المزامنة سحابياً (${arc.hijri} هـ) ☁️`;
+                document.getElementById('saveStatusIndicator').innerText = `🟢 متزامن سحابياً (${new Date().toLocaleTimeString('ar-SA', {hour:'2-digit', minute:'2-digit'})})`;
+            } else {
+                classSectionPeriods = {};
+                document.getElementById('lblTeams').innerText = 'لم يتم رفع ملفات اليوم على السحابة';
+            }
+            renderActiveGrid();
+        });
+    }
+
+    // ----------------------------------------------------
+    // إدارة الإعدادات وعرض الواجهة
+    // ----------------------------------------------------
+    function loadLocalSchoolSettings() {
+        const savedCfg = localStorage.getItem('sf_school_config');
+        if (savedCfg) {
+            try { schoolConfig = JSON.parse(savedCfg); } catch(e) {}
+        }
+        applySchoolSettingsUI();
+    }
+
+    function applySchoolSettingsUI() {
+        document.getElementById('cfgEduDirectorate').value = schoolConfig.directorate;
+        document.getElementById('cfgSchoolName').value = schoolConfig.schoolName;
+        document.getElementById('cfgPrincipalName').value = schoolConfig.principal;
+        document.getElementById('cfgVicePrincipalName').value = schoolConfig.vicePrincipal;
+        document.getElementById('cfgClassesList').value = schoolConfig.classes.join(', ');
+        document.getElementById('cfgSectionsList').value = schoolConfig.sections.join(', ');
+
+        document.getElementById('topSchoolBanner').innerText = `${schoolConfig.directorate} | ${schoolConfig.schoolName}`;
+        
+        document.getElementById('repDailyDirectorate').innerText = schoolConfig.directorate;
+        document.getElementById('repDailySchoolName').innerText = schoolConfig.schoolName;
+        document.getElementById('repDailyPrincipal').innerText = schoolConfig.principal;
+        document.getElementById('repDailyVicePrincipal').innerText = schoolConfig.vicePrincipal;
+
+        document.getElementById('repSupDirectorate').innerText = schoolConfig.directorate;
+        document.getElementById('repSupSchoolName').innerText = schoolConfig.schoolName;
+        document.getElementById('repSupPrincipal').innerText = schoolConfig.principal;
+        document.getElementById('repSupVicePrincipal').innerText = schoolConfig.vicePrincipal;
+    }
+
+    function saveSchoolSettings() {
+        schoolConfig.directorate = document.getElementById('cfgEduDirectorate').value.trim() || "الإدارة العامة للتعليم";
+        schoolConfig.schoolName = document.getElementById('cfgSchoolName').value.trim() || "المدرسة";
+        schoolConfig.principal = document.getElementById('cfgPrincipalName').value.trim() || "مدير المدرسة";
+        schoolConfig.vicePrincipal = document.getElementById('cfgVicePrincipalName').value.trim() || "وكيل المدرسة";
+
+        const cList = document.getElementById('cfgClassesList').value.split(/[,،]/).map(s => s.trim()).filter(Boolean);
+        schoolConfig.classes = cList.length > 0 ? cList : ["الرابع", "الخامس", "السادس"];
+
+        const sList = document.getElementById('cfgSectionsList').value.split(/[,،]/).map(s => s.trim()).filter(Boolean);
+        schoolConfig.sections = sList.length > 0 ? sList : ["أ", "ب", "ج"];
+
+        localStorage.setItem('sf_school_config', JSON.stringify(schoolConfig));
+
+        if (isCloudActive && db) {
+            db.collection("settings").doc("schoolConfig").set(schoolConfig);
+        }
+
+        applySchoolSettingsUI();
+        buildFilterButtons();
+        closeModal('settingsModal');
+        alert("تم حفظ واعتماد بيانات المدرسة بنجاح! 🏫");
+    }
+
+    function loadLocalMasterRoster() {
+        const savedData = localStorage.getItem('sf_master_roster');
+        if (savedData) {
+            studentMasterList = JSON.parse(savedData);
+            document.getElementById('lblRoster').innerText = `محفوظة دائماً (${studentMasterList.length} طالب) ✅`;
+            document.getElementById('lblRoster').style.background = "#dcfce7";
+            document.getElementById('cardRoster').classList.add('saved');
+            renderActiveGrid();
+        }
+    }
+
+    function buildFilterButtons() {
+        const cContainer = document.getElementById('classesBtnGroup');
+        const sContainer = document.getElementById('sectionsBtnGroup');
+        cContainer.innerHTML = '';
+        sContainer.innerHTML = '';
+
+        if (!schoolConfig.classes.includes(activeClass)) {
+            activeClass = schoolConfig.classes[0] || "";
+        }
+        if (!schoolConfig.sections.includes(activeSection)) {
+            activeSection = schoolConfig.sections[0] || "";
+        }
+
+        schoolConfig.classes.forEach(c => {
+            const btn = document.createElement('button');
+            btn.className = `btn-tab ${c === activeClass ? 'active' : ''}`;
+            btn.innerText = c;
+            btn.onclick = () => setClass(c, btn);
+            cContainer.appendChild(btn);
+        });
+
+        schoolConfig.sections.forEach(s => {
+            const btn = document.createElement('button');
+            btn.className = `btn-tab ${s === activeSection ? 'active' : ''}`;
+            btn.innerText = s;
+            btn.onclick = () => setSection(s, btn);
+            sContainer.appendChild(btn);
+        });
+
+        syncState();
+    }
+
+    function openSettingsModal() {
+        document.getElementById('settingsModal').classList.add('active-modal');
+    }
+
+    function updateHijriDisplay() {
+        hijriFormatted = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {
+            year: 'numeric', month: 'numeric', day: 'numeric'
+        }).format(currentDateObj);
+        document.getElementById('hijriConvertedText').innerText = `(${hijriFormatted} هـ)`;
+        document.getElementById('headerDate').innerText = `${activeDay} | ${hijriFormatted} هـ`;
+    }
+
+    function onDateChanged() {
+        const picker = document.getElementById('platformDatePicker');
+        if (picker.value) {
+            currentDateObj = new Date(picker.value);
+            updateHijriDisplay();
+            if (isCloudActive) {
+                attachDayRealtimeListener();
+            } else {
+                renderActiveGrid();
+            }
+        }
+    }
+
+    function setDay(day, btn) {
+        document.querySelectorAll('.days-group .day-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeDay = day;
+        updateHijriDisplay();
+        syncState();
+    }
+    function setClass(cls, btn) {
+        document.querySelectorAll('#classesBtnGroup .btn-tab').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeClass = cls;
+        syncState();
+    }
+    function setSection(sec, btn) {
+        document.querySelectorAll('#sectionsBtnGroup .btn-tab').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeSection = sec;
+        syncState();
+    }
+    function syncState() {
+        document.getElementById('txtCurrentView').innerText = `${activeDay} | الصف ${activeClass} (${activeSection})`;
+        renderActiveGrid();
+    }
+
+    function cleanEmail(raw) {
+        return raw ? raw.toString().toLowerCase().trim().replace(/[\r\n\t"]/g, '') : "";
+    }
+    function extractStudentKey(email) {
+        const match = email.match(/s(\d+)@/);
+        return match ? match[1] : email;
+    }
+
+    function normalizeArabicText(str) {
+        if (!str) return "";
+        return str.toString().trim()
+            .replace(/[إأآا]/g, 'ا')
+            .replace(/ى/g, 'ي')
+            .replace(/ة/g, 'ه')
+            .replace(/[ًٌٍَُِّْ~]/g, '')
+            .replace(/\s+/g, ' ')
+            .toLowerCase();
+    }
+
+    // ----------------------------------------------------
+    // معالجة الملفات (الطلاب وحصص التيمز)
+    // ----------------------------------------------------
+    function parseRosterFile(file) {
+        if (!file) return;
+        const reader = new FileReader();
+        reader.readAsText(file, "UTF-8");
+        reader.onload = (e) => {
+            studentMasterList = [];
+            const lines = e.target.result.split(/\r\n|\n/);
+
+            lines.forEach((rawLine, idx) => {
+                const line = rawLine.trim();
+                if (!line) return;
+
+                let cells = [];
+                if (line.includes('\t')) cells = line.split('\t');
+                else if (line.includes(';')) cells = line.split(';');
+                else cells = line.split(',');
+
+                cells = cells.map(c => c.replace(/["\r]/g, '').trim());
+
+                const mailMatch = line.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
+                const email = mailMatch ? cleanEmail(mailMatch[0]) : "";
+
+                const firstCell = cells[0] || "";
+                if (firstCell.includes("الاسم") || firstCell.includes("طالب") || firstCell.includes("Name") || firstCell.includes("م")) return;
+
+                const textCells = cells.filter(c => c && !c.includes('@'));
+                const studentName = textCells[0] || cells[0] || `طالب ${idx}`;
+                const studentGrade = textCells[1] || activeClass;
+                const studentSection = textCells[2] || activeSection;
+                const studentKey = email ? extractStudentKey(email) : `st_${idx}_${studentName.replace(/\s+/g, '')}`;
+
+                studentMasterList.push({
+                    name: studentName,
+                    grade: studentGrade,
+                    section: studentSection,
+                    email: email || "غير مسجل",
+                    key: studentKey
+                });
+            });
+
+            if (studentMasterList.length > 0) {
+                localStorage.setItem('sf_master_roster', JSON.stringify(studentMasterList));
+
+                if (isCloudActive && db) {
+                    db.collection("students").doc("masterList").set({
+                        list: studentMasterList,
+                        updatedAt: new Date().toISOString()
+                    }).then(() => {
+                        alert(`تم استيراد ومزامنة ${studentMasterList.length} طالب سحابياً! ☁️`);
+                    });
+                } else {
+                    alert(`تم حفظ ${studentMasterList.length} طالب محلياً بنجاح! 📗`);
+                }
+
+                document.getElementById('lblRoster').innerText = `محفوظة (${studentMasterList.length} طالب) ✅`;
+                document.getElementById('lblRoster').style.background = "#dcfce7";
+                document.getElementById('cardRoster').classList.add('saved');
+                renderActiveGrid();
+            } else {
+                alert("لم يتم العثور على سجلات صالحة في الملف.");
+            }
+        };
+    }
+
+    function parseTeamsFiles(files) {
+        if (!files || files.length === 0) return;
+        classSectionPeriods = {};
+        let loaded = 0;
+
+        Array.from(files).forEach((file) => {
+            const reader = new FileReader();
+            reader.readAsText(file, "UTF-8");
+            reader.onload = (e) => {
+                const text = e.target.result;
+                const lines = text.split(/\r\n|\n/);
+                let sessionAttendees = new Set();
+
+                lines.forEach(line => {
+                    if (!line.trim()) return;
+
+                    const mailMatch = line.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
+                    if (mailMatch) {
+                        const cleaned = cleanEmail(mailMatch[0]);
+                        sessionAttendees.add(cleaned);
+                        sessionAttendees.add(extractStudentKey(cleaned));
+                    }
+
+                    const parts = line.split(/[;,	]/).map(p => p.replace(/["\r]/g, '').trim()).filter(Boolean);
+                    if (parts.length > 0) {
+                        const potentialName = parts[0];
+                        if (!potentialName.includes("اسم") && !potentialName.includes("Name") && !potentialName.includes("@")) {
+                            sessionAttendees.add(normalizeArabicText(potentialName));
+                        }
+                    }
+                });
+
+                let classVote = {};
+                studentMasterList.forEach(st => {
+                    const normStName = normalizeArabicText(st.name);
+                    const targetKey = `${st.grade}_${st.section}`;
+
+                    const matchedByEmail = (st.email && st.email !== "غير مسجل") && (sessionAttendees.has(st.email) || sessionAttendees.has(st.key));
+                    let matchedByName = false;
+                    if (!matchedByEmail && normStName.length > 4) {
+                        matchedByName = sessionAttendees.has(normStName);
+                        if (!matchedByName) {
+                            for (let entry of sessionAttendees) {
+                                if (entry.length > 8 && (normStName.includes(entry) || entry.includes(normStName))) {
+                                    matchedByName = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    if (matchedByEmail || matchedByName) {
+                        classVote[targetKey] = (classVote[targetKey] || 0) + 1;
+                    }
+                });
+
+                let detectedClassKey = "";
+                let maxVotes = 0;
+                for (let k in classVote) {
+                    if (classVote[k] > maxVotes) {
+                        maxVotes = classVote[k];
+                        detectedClassKey = k;
+                    }
+                }
+
+                if (!detectedClassKey || maxVotes < 2) {
+                    const fname = file.name;
+                    schoolConfig.classes.forEach(g => {
+                        schoolConfig.sections.forEach(s => {
+                            if (fname.includes(g) && fname.includes(s)) detectedClassKey = `${g}_${s}`;
+                        });
+                    });
+                }
+
+                const finalClassKey = detectedClassKey || `${activeClass}_${activeSection}`;
+                if (!classSectionPeriods[finalClassKey]) classSectionPeriods[finalClassKey] = [];
+                classSectionPeriods[finalClassKey].push(sessionAttendees);
+
+                loaded++;
+                if (loaded === files.length) {
+                    document.getElementById('lblTeams').innerText = `تم فرز ${files.length} ملفات بنجاح ✓`;
+                    autoSaveDayWithPeriods();
+                    renderActiveGrid();
+                }
+            };
+        });
+    }
+
+    function autoSaveDayWithPeriods() {
+        const dateKey = currentDateObj.toISOString().split('T')[0];
+        let serializable = {};
+        for (let k in classSectionPeriods) {
+            serializable[k] = classSectionPeriods[k].map(s => Array.from(s));
+        }
+
+        // حفظ محلي احتياطي
+        let archives = JSON.parse(localStorage.getItem('sf_platform_archives_v5') || '{}');
+        archives[dateKey] = {
+            date: dateKey,
+            hijri: hijriFormatted,
+            day: activeDay,
+            data: serializable
+        };
+        localStorage.setItem('sf_platform_archives_v5', JSON.stringify(archives));
+
+        // حفظ ومزامنة سحابية
+        if (isCloudActive && db) {
+            db.collection("dailyArchives").doc(dateKey).set({
+                date: dateKey,
+                hijri: hijriFormatted,
+                day: activeDay,
+                data: serializable,
+                updatedAt: new Date().toISOString()
+            }).then(() => {
+                document.getElementById('saveStatusIndicator').innerText = `🟢 تم الحفظ والمزامنة السحابية (${new Date().toLocaleTimeString('ar-SA', {hour:'2-digit', minute:'2-digit'})})`;
+            }).catch(e => {
+                console.error(e);
+                document.getElementById('saveStatusIndicator').innerText = `⚠️ حُفظ محلياً فقط`;
+            });
+        } else {
+            document.getElementById('saveStatusIndicator').innerText = `🟢 تم الحفظ محلياً (${new Date().toLocaleTimeString('ar-SA', {hour:'2-digit', minute:'2-digit'})})`;
+        }
+    }
+
+    function getCumulativeAbsenceDays(studentEmail, studentKey, studentName, grade, section) {
+        const archives = JSON.parse(localStorage.getItem('sf_platform_archives_v5') || '{}');
+        let totalAbsentDays = 0;
+        const targetKey = `${grade}_${section}`;
+        const normStName = normalizeArabicText(studentName);
+
+        Object.values(archives).forEach(arc => {
+            const classData = (arc.data && arc.data[targetKey]) ? arc.data[targetKey] : [];
+            if (classData.length > 0) {
+                let attendedCount = 0;
+                classData.forEach(periodArr => {
+                    const pSet = new Set(periodArr);
+                    let att = false;
+                    if (studentEmail && studentEmail !== "غير مسجل" && (pSet.has(studentEmail) || pSet.has(studentKey))) {
+                        att = true;
+                    }
+                    if (!att && normStName.length > 4) {
+                        if (pSet.has(normStName)) att = true;
+                        else {
+                            for (let entry of pSet) {
+                                if (entry.length > 8 && (normStName.includes(entry) || entry.includes(normStName))) {
+                                    att = true; break;
+                                }
+                            }
+                        }
+                    }
+                    if (att) attendedCount++;
+                });
+                if (attendedCount === 0) totalAbsentDays++;
+            }
+        });
+        return totalAbsentDays;
+    }
+
+    function renderActiveGrid() {
+        const tbody = document.getElementById('tblBody');
+        tbody.innerHTML = '';
+
+        const activeList = studentMasterList.filter(s => 
+            s.grade.includes(activeClass) && s.section.includes(activeSection)
+        );
+
+        const currentKey = `${activeClass}_${activeSection}`;
+        const periodsList = classSectionPeriods[currentKey] || [];
+        const classPeriodsCount = periodsList.length;
+
+        document.getElementById('classPeriodsCountLabel').innerText = `(الحصص المرفوعة لـ ${activeClass} ${activeSection}: ${classPeriodsCount} حصص)`;
+
+        if (activeList.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="9" style="padding:24px; color:#b91c1c;">لا توجد سجلات لـ: الصف ${activeClass} (${activeSection})</td></tr>`;
+            updateCounters(0, 0, 0, 0);
+            return;
+        }
+
+        let fullPresentCount = 0;
+        let fullAbsentCount = 0;
+        let partialCount = 0;
+
+        activeList.forEach((st, idx) => {
+            let attendedCount = 0;
+            const normStName = normalizeArabicText(st.name);
+
+            periodsList.forEach(periodSet => {
+                let hasAttended = false;
+
+                if (st.email && st.email !== "غير مسجل") {
+                    if (periodSet.has(st.email) || periodSet.has(st.key)) {
+                        hasAttended = true;
+                    }
+                }
+
+                if (!hasAttended && normStName.length > 4) {
+                    if (periodSet.has(normStName)) {
+                        hasAttended = true;
+                    } else {
+                        for (let entry of periodSet) {
+                            if (entry.length > 8 && (normStName.includes(entry) || entry.includes(normStName))) {
+                                hasAttended = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if (hasAttended) attendedCount++;
+            });
+
+            const absentCount = Math.max(0, classPeriodsCount - attendedCount);
+
+            let statusHtml = '';
+            if (classPeriodsCount === 0) {
+                statusHtml = '<span style="color:#64748b;">بانتظار الحصص</span>';
+            } else if (absentCount === 0) {
+                statusHtml = '<span class="badge badge-present">حاضر كامل اليوم</span>';
+                fullPresentCount++;
+            } else if (attendedCount === 0) {
+                statusHtml = '<span class="badge badge-absent">غائب كامل اليوم</span>';
+                fullAbsentCount++;
+            } else {
+                let pLabel = absentCount === 1 ? 'حصة واحدة' : (absentCount === 2 ? 'حصتين' : `${absentCount} حصص`);
+                statusHtml = `<span class="badge badge-partial">غائب (${pLabel})</span>`;
+                partialCount++;
+            }
+
+            const cumulativeAbs = getCumulativeAbsenceDays(st.email, st.key, st.name, st.grade, st.section);
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${idx + 1}</td>
+                <td style="font-weight:700; text-align:right;">${st.name}</td>
+                <td>${st.grade}</td>
+                <td>${st.section}</td>
+                <td class="email-col" style="color:var(--text-muted); font-size:12px;">${st.email}</td>
+                <td style="color:var(--present); font-weight:bold;">${attendedCount} حصص</td>
+                <td style="color:${absentCount > 0 ? 'var(--absent)' : '#64748b'}; font-weight:bold;">${absentCount} حصص</td>
+                <td>${statusHtml}</td>
+                <td><b style="color:${cumulativeAbs >= 3 ? '#991b1b' : 'inherit'}">${cumulativeAbs} أيام كاملة</b></td>
+            `;
+            tbody.appendChild(tr);
+        });
+
+        updateCounters(activeList.length, fullPresentCount, fullAbsentCount, partialCount);
+    }
+
+    function updateCounters(total, fullPres, fullAbs, partial) {
+        document.getElementById('cntTotal').innerText = total;
+        document.getElementById('cntFullPresent').innerText = fullPres;
+        document.getElementById('cntFullAbsent').innerText = fullAbs;
+        document.getElementById('cntPartial').innerText = partial;
+    }
+
+    function exportWhatsappFormatted() {
+        const activeList = studentMasterList.filter(s => s.grade.includes(activeClass) && s.section.includes(activeSection));
+        const currentKey = `${activeClass}_${activeSection}`;
+        const periodsList = classSectionPeriods[currentKey] || [];
+        const classPeriodsCount = periodsList.length;
+
+        if (classPeriodsCount === 0) {
+            alert(`يرجى رفع ملفات الحصص الخاصة بصف ${activeClass} (${activeSection}) أولاً!`);
+            return;
+        }
+
+        const absentees = activeList.filter(s => {
+            let attended = 0;
+            const normStName = normalizeArabicText(s.name);
+            periodsList.forEach(p => { 
+                let att = false;
+                if (s.email && s.email !== "غير مسجل" && (p.has(s.email) || p.has(s.key))) att = true;
+                if (!att && normStName.length > 4) {
+                    if (p.has(normStName)) att = true;
+                    else {
+                        for (let entry of p) {
+                            if (entry.length > 8 && (normStName.includes(entry) || entry.includes(normStName))) { att = true; break; }
+                        }
+                    }
+                }
+                if (att) attended++;
+            });
+            return attended < classPeriodsCount;
+        });
+
+        if (absentees.length === 0) {
+            alert("ما شاء الله! لا يوجد طلاب غائبون في هذا الفصل اليوم.");
+            return;
+        }
+
+        let msg = `مدرسة ${schoolConfig.schoolName}\n`;
+        msg += `كشف غياب منصة teams - اليوم : ${activeDay} : ${hijriFormatted} هـ\n`;
+        msg += `الصف: ${activeClass}          الفصل: ${activeSection}\n`;
+        msg += `---------------------------------\n`;
+
+        absentees.forEach((st, i) => {
+            let attended = 0;
+            const normStName = normalizeArabicText(st.name);
+            periodsList.forEach(p => { 
+                let att = false;
+                if (st.email && st.email !== "غير مسجل" && (p.has(st.email) || p.has(st.key))) att = true;
+                if (!att && normStName.length > 4) {
+                    if (p.has(normStName)) att = true;
+                    else {
+                        for (let entry of p) {
+                            if (entry.length > 8 && (normStName.includes(entry) || entry.includes(normStName))) { att = true; break; }
+                        }
+                    }
+                }
+                if (att) attended++;
+            });
+            const absentCount = classPeriodsCount - attended;
+            
+            let statusText = "";
+            if (attended === 0) {
+                statusText = "غائب اليوم كامل";
+            } else if (absentCount === 1) {
+                statusText = "غائب حصة";
+            } else if (absentCount === 2) {
+                statusText = "غائب حصتين";
+            } else {
+                statusText = `غائب ${absentCount} حصص`;
+            }
+            msg += `${i + 1}. ${st.name} (${statusText})\n`;
+        });
+
+        navigator.clipboard.writeText(msg).then(() => {
+            alert("تم نسخ كشف غياب الواتساب بنجاح! 📲");
+        });
+    }
+
+    function exportFullBackup() {
+        const fullBackup = {
+            version: "5.3-cloud",
+            exportDate: new Date().toISOString(),
+            schoolConfig: schoolConfig,
+            masterRoster: studentMasterList,
+            archives: JSON.parse(localStorage.getItem('sf_platform_archives_v5') || '{}')
+        };
+
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(fullBackup, null, 2));
+        const downloadAnchor = document.createElement('a');
+        const dateStr = currentDateObj.toISOString().split('T')[0];
+        downloadAnchor.setAttribute("href", dataStr);
+        downloadAnchor.setAttribute("download", `نسخة_انضباط_${schoolConfig.schoolName}_${dateStr}.json`);
+        document.body.appendChild(downloadAnchor);
+        downloadAnchor.click();
+        downloadAnchor.remove();
+    }
+
+    function importFullBackup(file) {
+        if (!file) return;
+        const reader = new FileReader();
+        reader.readAsText(file, "UTF-8");
+        reader.onload = (e) => {
+            try {
+                const imported = JSON.parse(e.target.result);
+                if (imported.schoolConfig) {
+                    schoolConfig = imported.schoolConfig;
+                    saveSchoolSettings();
+                }
+                if (imported.masterRoster && Array.isArray(imported.masterRoster)) {
+                    studentMasterList = imported.masterRoster;
+                    localStorage.setItem('sf_master_roster', JSON.stringify(studentMasterList));
+                    if (isCloudActive && db) {
+                        db.collection("students").doc("masterList").set({ list: studentMasterList });
+                    }
+                }
+                if (imported.archives) {
+                    localStorage.setItem('sf_platform_archives_v5', JSON.stringify(imported.archives));
+                }
+                buildFilterButtons();
+                renderActiveGrid();
+                alert("🎉 تم استيراد ومزامنة البيانات بنجاح تام!");
+            } catch (err) {
+                alert("عذراً، الملف المحدد غير صالح أو تالف.");
+            }
+        };
+    }
+
+    function openHistoryModal() {
+        renderHistoryList();
+        document.getElementById('historyModal').classList.add('active-modal');
+    }
+
+    async function renderHistoryList() {
+        const container = document.getElementById('historyListContainer');
+        container.innerHTML = '<div style="text-align:center; padding:15px; color:#64748b;">جاري جلب الأيام...</div>';
+
+        let keys = [];
+        let itemsMap = {};
+
+        if (isCloudActive && db) {
+            try {
+                const snap = await db.collection("dailyArchives").get();
+                snap.forEach(doc => {
+                    keys.push(doc.id);
+                    itemsMap[doc.id] = doc.data();
+                });
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        if (keys.length === 0) {
+            const archives = JSON.parse(localStorage.getItem('sf_platform_archives_v5') || '{}');
+            keys = Object.keys(archives);
+            itemsMap = archives;
+        }
+
+        keys.sort().reverse();
+        container.innerHTML = '';
+
+        if (keys.length === 0) {
+            container.innerHTML = '<div style="text-align:center; padding:20px; color:#64748b;">لا توجد أيام محفوظة حتى الآن.</div>';
+            return;
+        }
+
+        keys.forEach(k => {
+            const item = itemsMap[k];
+            const div = document.createElement('div');
+            div.className = 'history-item';
+            div.innerHTML = `
+                <div>
+                    <span style="font-size:15px; font-weight:800; color:var(--gov-dark);">يوم ${item.day}</span>
+                    <span style="color:#64748b; font-size:13px; margin-right:8px;">| الموافق: <b>${item.hijri} هـ</b> (${item.date})</span>
+                </div>
+                <div style="display:flex; gap:8px;">
+                    <button class="btn-tab active" onclick="loadArchivedDay('${item.date}')" style="padding:5px 14px; font-size:12px;">👁️ استعراض</button>
+                    <button class="btn-delete-day" onclick="deleteArchivedDay('${item.date}', '${item.day}')">🗑️ حذف</button>
+                </div>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    async function deleteArchivedDay(dateStr, dayName) {
+        if (!confirm(`هل أنت متأكد من حذف بيانات يوم ${dayName} (${dateStr}) نهائياً؟`)) return;
+
+        let archives = JSON.parse(localStorage.getItem('sf_platform_archives_v5') || '{}');
+        delete archives[dateStr];
+        localStorage.setItem('sf_platform_archives_v5', JSON.stringify(archives));
+
+        if (isCloudActive && db) {
+            await db.collection("dailyArchives").doc(dateStr).delete();
+        }
+
+        const currentDateStr = currentDateObj.toISOString().split('T')[0];
+        if (dateStr === currentDateStr) {
+            classSectionPeriods = {};
+            document.getElementById('lblTeams').innerText = 'تم حذف بيانات هذا اليوم';
+        }
+
+        renderHistoryList();
+        renderActiveGrid();
+        alert(`تم حذف بيانات يوم ${dayName} بنجاح!`);
+    }
+
+    function loadArchivedDay(dateStr) {
+        document.getElementById('platformDatePicker').value = dateStr;
+        currentDateObj = new Date(dateStr);
+        updateHijriDisplay();
+
+        if (isCloudActive && db) {
+            attachDayRealtimeListener();
+        } else {
+            let archives = JSON.parse(localStorage.getItem('sf_platform_archives_v5') || '{}');
+            if (archives[dateStr]) {
+                const arc = archives[dateStr];
+                activeDay = arc.day;
+                classSectionPeriods = {};
+                for (let k in arc.data) {
+                    classSectionPeriods[k] = arc.data[k].map(arr => new Set(arr));
+                }
+                document.querySelectorAll('.days-group .day-btn').forEach(b => {
+                    if (b.innerText === arc.day) b.classList.add('active'); else b.classList.remove('active');
+                });
+            }
+        }
+        closeModal('historyModal');
+        renderActiveGrid();
+    }
+
+    function openDailyFullAbsenceReport() {
+        document.getElementById('dailyRepDay').innerText = activeDay;
+        document.getElementById('dailyRepDate').innerText = `${hijriFormatted} هـ`;
+        
+        const tbody = document.getElementById('dailyReportTableBody');
+        tbody.innerHTML = '';
+        let hasData = false;
+
+        schoolConfig.classes.forEach(cls => {
+            schoolConfig.sections.forEach(sec => {
+                const targetKey = `${cls}_${sec}`;
+                const classStudents = studentMasterList.filter(s => s.grade.includes(cls) && s.section.includes(sec));
+                const periodsList = classSectionPeriods[targetKey] || [];
+                const pCount = periodsList.length;
+
+                if (classStudents.length > 0) {
+                    hasData = true;
+                    let fullAbsentees = [];
+                    if (pCount > 0) {
+                        fullAbsentees = classStudents.filter(s => {
+                            let att = 0;
+                            const normStName = normalizeArabicText(s.name);
+                            periodsList.forEach(p => { 
+                                let hasAtt = false;
+                                if (s.email && s.email !== "غير مسجل" && (p.has(s.email) || p.has(s.key))) hasAtt = true;
+                                if (!hasAtt && normStName.length > 4) {
+                                    if (p.has(normStName)) hasAtt = true;
+                                    else {
+                                        for (let entry of p) {
+                                            if (entry.length > 8 && (normStName.includes(entry) || entry.includes(normStName))) { hasAtt = true; break; }
+                                        }
+                                    }
+                                }
+                                if (hasAtt) att++;
+                            });
+                            return att === 0;
+                        });
+                    }
+
+                    const tr = document.createElement('tr');
+                    const namesStr = fullAbsentees.length > 0 
+                        ? fullAbsentees.map((s, idx) => `${idx + 1}. ${s.name}`).join(' | ') 
+                        : (pCount === 0 ? '<span style="color:#64748b;">لم ترفع حصص لهذا الفصل</span>' : '<span style="color:var(--present); font-weight:bold;">لا يوجد غياب كامل (حضور 100%)</span>');
+
+                    tr.innerHTML = `
+                        <td style="font-weight:bold;">الصف ${cls} (${sec})</td>
+                        <td>${classStudents.length}</td>
+                        <td style="color:${fullAbsentees.length > 0 ? 'var(--absent)' : 'inherit'}; font-weight:bold;">${fullAbsentees.length} طالب</td>
+                        <td style="text-align:right; font-size:11px; line-height:1.5;">${namesStr}</td>
+                    `;
+                    tbody.appendChild(tr);
+                }
+            });
+        });
+
+        if (!hasData) {
+            tbody.innerHTML = '<tr><td colspan="4" style="padding:15px; color:#b91c1c;">يرجى رفع قاعدة بيانات المدرسة أولاً.</td></tr>';
+        }
+
+        document.getElementById('dailyReportModal').classList.add('active-modal');
+    }
+
+    function openSupervisionModal() {
+        document.getElementById('supDay').innerText = activeDay;
+        document.getElementById('supDate').innerText = `${hijriFormatted} هـ`;
+
+        const absBody = document.getElementById('supAbsTableBody');
+        absBody.innerHTML = '';
+        let absenteeRows = [];
+
+        studentMasterList.forEach(st => {
+            const currentKey = `${st.grade}_${st.section}`;
+            const periodsList = classSectionPeriods[currentKey] || [];
+            const classPeriodsCount = periodsList.length;
+
+            if (classPeriodsCount > 0) {
+                let attended = 0;
+                const normStName = normalizeArabicText(st.name);
+
+                periodsList.forEach(p => { 
+                    let att = false;
+                    if (st.email && st.email !== "غير مسجل" && (p.has(st.email) || p.has(st.key))) att = true;
+                    if (!att && normStName.length > 4) {
+                        if (p.has(normStName)) att = true;
+                        else {
+                            for (let entry of p) {
+                                if (entry.length > 8 && (normStName.includes(entry) || entry.includes(normStName))) { att = true; break; }
+                            }
+                        }
+                    }
+                    if (att) attended++;
+                });
+
+                const absentCount = classPeriodsCount - attended;
+
+                if (attended === 0) {
+                    absenteeRows.push({
+                        name: st.name,
+                        grade: st.grade,
+                        section: st.section,
+                        type: 'غياب كامل',
+                        periods: `جميع الحصص (${classPeriodsCount})`,
+                        action: 'إشعار ومساءلة ولي الأمر'
+                    });
+                } else if (absentCount > 0) {
+                    let pLabel = absentCount === 1 ? 'حصة واحدة' : (absentCount === 2 ? 'حصتين' : `${absentCount} حصص`);
+                    absenteeRows.push({
+                        name: st.name,
+                        grade: st.grade,
+                        section: st.section,
+                        type: 'غياب جزئي',
+                        periods: pLabel,
+                        action: 'متابعة وكيل المدرسة'
+                    });
+                }
+            }
+        });
+
+        if (absenteeRows.length === 0) {
+            absBody.innerHTML = `<tr><td colspan="7" style="color:var(--present); font-weight:bold; padding:12px;">ما شاء الله، الحضور مكتمل ولا توجد حالات غياب في الفصول المرفوعة.</td></tr>`;
+        } else {
+            absenteeRows.slice(0, 15).forEach((row, i) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${i + 1}</td>
+                    <td style="font-weight:bold; text-align:right;">${row.name}</td>
+                    <td>${row.grade}</td>
+                    <td>${row.section}</td>
+                    <td style="color:${row.type === 'غياب كامل' ? '#991b1b' : '#b45309'}; font-weight:bold;">${row.type}</td>
+                    <td>${row.periods}</td>
+                    <td style="font-size:11px;">${row.action}</td>
+                `;
+                absBody.appendChild(tr);
+            });
+        }
+
+        document.getElementById('supervisionModal').classList.add('active-modal');
+    }
+
+    function printDailyReport() {
+        document.body.classList.remove('print-mode-sup');
+        document.body.classList.add('print-mode-daily');
+        window.print();
+        setTimeout(() => { document.body.classList.remove('print-mode-daily'); }, 1000);
+    }
+
+    function printSupervisionReport() {
+        document.body.classList.remove('print-mode-daily');
+        document.body.classList.add('print-mode-sup');
+        window.print();
+        setTimeout(() => { document.body.classList.remove('print-mode-sup'); }, 1000);
+    }
+
+    function closeModal(id) {
+        document.getElementById(id).classList.remove('active-modal');
+    }
+</script>
+
+</body>
+</html>
